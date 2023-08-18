@@ -10,14 +10,18 @@
     20CS098-Miliyana Reena Dsouza
 
 ## Problem Statement:
-    This program manages the rollout of a vaccine registration system, allowing eligible users to register
-    for vaccine doses, schedule appointments, and manage vaccination center information.
+    This program manages the rollout of a vaccine registration system, allowing eligible 
+    users to register for vaccine doses, schedule appointments, and manage vaccination 
+    center information.
 
 ## Functionality:
-    1. **Registration Form:** Collects personal information, contact details, medical history, and preferred vaccination center.
-    2. **Appointment Scheduling:** Allows users to schedule appointments with desired date and time slots.
-    3. **Admin Dashboard:** Provides admin functionalities such as monitoring registrations, viewing stock,
-    managing centers, and generating reports.
+    1. **Registration Form:** Collects personal information, contact details, medical history, 
+    and preferred vaccination center.
+    2. **Appointment Scheduling:** Allows users to schedule appointments with desired date 
+    and time slots.
+    3. **Admin Dashboard:** Provides admin functionalities such as monitoring registrations, 
+    viewing stock,managing centers, and generating reports.
+
 
 ## Code Components:
 
@@ -25,7 +29,8 @@
     Handles the main menu navigation and user input to access different functionalities.
 
     ### 2. Registration Form (`registrationForm()`):
-    Gathers personal information, contact details, medical history, and preferred vaccination center. Saves registration data to a file.
+    Gathers personal information, contact details, medical history, and preferred vaccination center. 
+    Saves registration data to a file.
 
     ### 3. Appointment Scheduling (`scheduleAppointment()`):
     Allows users to schedule appointments by providing Aadhaar number, date, and time slot. Saves appointment data to a file.
@@ -34,20 +39,19 @@
     Displays appointments for a given date by reading from the appointments file.
 
     ### 5. Admin Dashboard (`adminDashboard()`):
-    Offers admin-specific functionalities such as monitoring registrations, viewing stock, managing centers, and generating
-    general reports.
+    Offers admin-specific functionalities such as monitoring registrations, viewing stock, managing centers, 
+    and generating general reports.
+
 ## Important Functions:
 
-    1. **`registrationForm()`**: Collects and stores user registration data including personal information, contact details,
-    medical history, and preferred vaccination center.
-
-    2. **`scheduleAppointment()`**: Enables users to schedule appointments with desired date and time slots, storing appointment 
-    data in a file.
-
-    3. **`viewAppointmentsByDate(date)`**: Displays appointments for a specified date by reading data from the appointments file.
-
-    4. **`adminDashboard()`**: Provides various admin functionalities such as monitoring registrations, viewing stock, managing 
-    centers, and generating general reports.
+    1. **`registrationForm()`**: Collects and stores user registration data including personal information, 
+    contact details, medical history, and preferred vaccination center.
+    2. **`scheduleAppointment()`**: Enables users to schedule appointments with desired date and time slots,
+    storing appointment data in a file. 
+    3. **`viewAppointmentsByDate(date)`**: Displays appointments for a specified date by reading data from the 
+    appointments file.
+    4. **`adminDashboard()`**: Provides various admin functionalities such as monitoring registrations, 
+    viewing stock, managing centers, and generating general reports.
 
 ## Usage:
     1. Compile the program using a C compiler.
