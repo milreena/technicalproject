@@ -10,85 +10,122 @@
     20CS098-Miliyana Reena Dsouza
 
 ## Problem Statement:
-    This project aims to create a Vaccination Registration System that allows users to register for 
-    vaccination appointments, manage appointments, view vaccination center information, and generate 
-    reports.The system is designed to facilitate efficient vaccination appointment scheduling and management
-
+        The Vaccine Registration System is designed to streamline the process of vaccine registration,
+        appointment scheduling, and management. It serves both customers who need vaccinations and administrators
+        who manage the system and appointments. The system aims to provide a user-friendly interface for
+        registration and appointment management while offering essential tools for administrators
+        to oversee the process efficiently.
  
 ## Functionality:
-    The following functionalities have been implemented in the code:
+        The following functionalities are implemented in the Vaccine Registration System:
 
-    1.**Registratio**n: Users can register for vaccination by providing personal information,
-    contact details,medical history, and preferred vaccination center.
-    2.**Appointment Scheduling**: Users can schedule vaccination appointments by providing
-    their Aadhaar number,date, and time.
-    3.**Admin Dashboard**: Admins can monitor registrations, view available 
-    vaccine stock, manage vaccination centers, and generate general reports.
-    4.**Vaccine Information**: Admins can add, view, edit, and delete vaccine information.
-    5.**Manage Appointments**: Admins can view appointments, reschedule appointments,
-    cancel appointments,and send reminders to upcoming appointments.
-    6.**Profile Management**: Registered users can update their personal information,
-    change appointments,and update medical reports.
+    ### 1.Customer Menu:
+    
+    Registration Form: Allows customers to provide personal information, contact details,
+    medical history, and a preferred vaccination center.
+    Appointment Scheduling: Enables customers to schedule vaccination appointments.
+    Dashboard: Provides customers with a summary of their appointments and profile information.
+    Profile Management: Allows customers to update their personal details and medical history.
+    
+    ### 2.Admin Menu:
+    
+    Manage Vaccine Information: Enables administrators to add, edit, and delete vaccine information.
+    Manage Appointments: Allows administrators to view, reschedule, and cancel appointments.
+    Add Vaccine Stock: Permits administrators to add vaccine stock to the system.
 
 
 ## Code Components:
      ## The code consists of several main components:
-    1.Main Menu: This is the entry point of the program. It presents various options to the user,
-    allowing them to navigate through different functionalities.
-    2.Registration Form: Users can provide personal information, contact details, medical history,
+     ## Division of Components ##
+    
+    1.**Main Function**: 
+    The entry point of the program that prompts users to select their role
+    (customer or admin) and directs them to the corresponding menu.
+    2.**Customer Menu**: 
+    Provides options for customers to access various functionalities related to 
+    registration, appointments, dashboard, and profile management.
+    3.**Admin Menu**: 
+    Offers options for administrators to manage vaccine information, appointments, and vaccine stock.
+    
+    ## The code is divided into the following  components:
+     **Registration Form**: Users can provide personal information, contact details, medical history,
     and preferred vaccination center for registration.
-    3.Appointment Management: Users can schedule appointments, view appointments by date, and manage
+    ## Appointment Management ##: Users can schedule appointments, view appointments by date, and manage
     appointments (reschedule, cancel, and send reminders).
-    4.Admin Dashboard: Admins can monitor registrations, view vaccine stock, manage vaccination centers,
+    ## Admin Dashboard ##: Admins can monitor registrations, view vaccine stock, manage vaccination centers,
     and generate general reports.
-    5.Vaccine Information: Admins can manage vaccine information, including adding, viewing, editing,
+    ## Vaccine Information ##: Admins can manage vaccine information, including adding, viewing, editing,
     and deleting.
-    6.Profile Management: Registered users can update their personal information, change appointments,
+    ## Profile Management ##: Registered users can update their personal information, change appointments,
     and update medical reports.
 
 ## Important Functions:
 
 ## Some of the important functions of our code are as follows:
 
-   ### 1.'registrationForm(): 
-    This function handles the user registration process. It collects the user's personal information,
-    contact details, medical history, and preferred vaccination center. The collected data is then stored
-    in the registrations.txt file. This function is crucial for building the user database and allowing
-    individuals to register for vaccinations.
-    
-   ### 2.'scheduleAppointment()':
-      This function enables users to schedule their vaccination appointments. It prompts the user to
-      enter their Aadhaar number, preferred date, and time for the  appointment. The entered appointment
-      details are then stored in the appointments.txt file. By allowing users to schedule appointments,
-      this function ensures a systematic and organized approach to vaccination.
-  
-   ### 3.'adminDashboard()':
-       The admin dashboard function provides administrators with various tools to manage the vaccination
-       system. It presents a menu with options to monitor registrations, manage vaccination centers,
-       view available stock, and generate reports. This function is essential for administrators to
-       have a comprehensive view of the system's status and to make informed decisions.
-   
-   ### 4.'addVaccineInfo()', 'viewVaccineInfo()', 'editVaccineInfo()',' deleteVaccineInfo()':
-         These functions collectively manage vaccine information. addVaccineInfo() allows administrators
-         to add new vaccine details, such as ID, name, manufacturer, and doses required, to the vaccine.txt file.
-         viewVaccineInfo() displays the stored vaccine information. editVaccineInfo() enables administrators
-         to update vaccine details by providing the vaccine's ID. deleteVaccineInfo() allows administrators
-         to remove vaccine information based on the vaccine's ID. These functions facilitate efficient management
-         of vaccine-related data.
-   
-   ### 5.'manageMenu()':
-         These functions deal with appointment management and reminders. viewAppointments() displays
-         the scheduled appointments. rescheduleAppointment() allows users to change their appointment
-         date and time. cancelAppointment() enables users to cancel their appointments. sendReminder()
-         automatically sends reminders for upcoming appointments. These functions ensure that users are
-         informed about their appointments and have the flexibility to modify them if necessary.
-    
-   ### 6.'updateProfile()', 'changeAppointment()', 'updateMedicalReport()':
-          These functions are part of the profile management system. updateProfile() lets users update
-          their personal information, including their name and Aadhaar number. changeAppointment() allows
-          users to modify their appointment details, such as date and time. updateMedicalReport() allows
-          users to update their medical history and prescription information. These functions empower users
-          to maintain accurate and up-to-date profiles.
+### 1. **`registrationForm()`:**
+     - Purpose: Collects comprehensive customer information for registration, including personal,
+     contact, medical, and preferred center details.
+     - Components:
+       - Personal Information: Collects the customer's name, Aadhaar number, date of birth, and gender.
+       - Contact Details: Gathers email, phone number, emergency contact, emergency phone, and address.
+       - Medical History: Records medical history, prescription, allergies, and current medications.
+       - Preferred Center: Takes the center name for vaccination and its location.
+     - Importance: Creates a comprehensive profile for the customer, helping the system cater to their
+     needs effectively.
+
+### 2. **`appointmentScheduling()`:**
+     - Purpose: Enables customers to schedule vaccination appointments by selecting a suitable date and time.
+     - Components:
+       - Aadhaar Number: Identifies the customer for appointment association.
+       - Date and Time: Allows customers to choose a date and time slot for their appointment.
+       - Center Name: Specifies the preferred vaccination center for the appointment.
+     - Importance: Facilitates organized appointment scheduling for customers.
+
+### 3. **`dashboard()`:**
+     - Purpose: Provides an overview of relevant information for customers, including appointment 
+     summary, stock availability, and center details.
+     - Components:
+       - `monitorRegistrations()`: Displays registered people for monitoring.
+       - `viewStock()`: Shows available stock of vaccines at various centers.
+       - `manageCenters()`: Allows administrators to manage vaccination centers, including adding,
+       editing, deleting, and viewing.
+       - `generalReport()`: Generates a general report summarizing vaccination data.
+     - Importance: Offers transparency and insights for both customers and administrators about
+     registrations, stock, and center information.
+
+### 4. **`vaccineInformation()`:**
+     - Purpose: Enables administrators to manage vaccine details, including adding, editing, and deleting vaccine information.
+     - Components:
+       - `addVaccineInformation()`: Lets administrators add new vaccine information.
+       - `editVaccineInformation()`: Allows administrators to modify existing vaccine details.
+       - `deleteVaccineInformation()`: Permits administrators to remove outdated or incorrect vaccine information.
+       - `viewVaccineInformation()`: Displays a list of available vaccines and their details.
+     - Importance: Ensures accurate and up-to-date information about the vaccines being offered.
+
+### 5. **`manageAppointments()`:**
+     - Purpose: Empowers administrators to oversee appointments, including viewing, rescheduling, canceling, and sending reminders.
+     - Components:
+       - `viewAppointments()`: Displays a list of appointments for administrators to monitor.
+       - `rescheduleAppointment()`: Allows administrators to change appointment dates and times.
+       - `cancelAppointment()`: Permits administrators to cancel appointments.
+       - `sendReminder()`: Sends reminders to customers about upcoming appointments.
+     - Importance: Facilitates efficient management of appointments and improves communication with customers.
+
+### 6. **`profileManagement()`:**
+     - Purpose: Enables customers to update their profile information, including personal details, appointments, and medical reports.
+     - Components:
+       - `updateInformation()`: Allows customers to change their personal details.
+       - `changeAppointment()`: Enables customers to reschedule their appointments.
+       - `updateMedicalReport()`: Permits customers to update their medical history and prescriptions.
+     - Importance: Offers customers the ability to keep their information accurate and up-to-date.
+
+### 7. **`addStock()`:**
+     - Purpose: Allows administrators to add vaccine stock to the system to ensure a continuous supply for vaccinations.
+     - Components:
+       - Vaccine Name: Specifies the name of the vaccine.
+       - Quantity: Specifies the quantity of vaccines being added to the stock.
+     - Importance: Maintains an adequate supply of vaccines, contributing to seamless vaccination operations.
 
 ## Usage:
     1. Compile the program using a C compiler.
@@ -98,7 +135,7 @@
 ## Additional Points
     1.The system promotes efficient registration and appointment scheduling for vaccinations.
     2.User-friendly menus guide users through various functionalities.
-    3.Admins have control over vaccine information, appointment management, and center details.
+    3.Admins have control over vaccine information, appointment management,vaccine stock and center details.
     4.Automated reminders enhance user experience and appointment adherence.
 
 
