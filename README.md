@@ -21,23 +21,22 @@
 
     ### 1.Customer Menu:
     
-    Registration Form: Allows customers to provide personal information, contact details,
+    **Registration Form**: Allows customers to provide personal information, contact details,
     medical history, and a preferred vaccination center.
-    Appointment Scheduling: Enables customers to schedule vaccination appointments.
-    Dashboard: Provides customers with a summary of their appointments and profile information.
-    Profile Management: Allows customers to update their personal details and medical history.
+    **Appointment Scheduling**: Enables customers to schedule vaccination appointments.
+    **Dashboard**: Provides customers with a summary of their appointments and profile information.
+    **Profile Management**: Allows customers to update their personal details and medical history.
     
     ### 2.Admin Menu:
     
-    Manage Vaccine Information: Enables administrators to add, edit, and delete vaccine information.
-    Manage Appointments: Allows administrators to view, reschedule, and cancel appointments.
-    Add Vaccine Stock: Permits administrators to add vaccine stock to the system.
+    **Manage Vaccine Information**: Enables administrators to add, edit, and delete vaccine information.
+    **Manage Appointments**: Allows administrators to view, reschedule, and cancel appointments.
+    **Add Vaccine Stock**: Permits administrators to add vaccine stock to the system.
 
 
 ## Code Components:
      ## The code consists of several main components:
      ## Division of Components ##
-    
     1.**Main Function**: 
     The entry point of the program that prompts users to select their role
     (customer or admin) and directs them to the corresponding menu.
@@ -47,17 +46,14 @@
     3.**Admin Menu**: 
     Offers options for administrators to manage vaccine information, appointments, and vaccine stock.
     
-    ## The code is divided into the following  components:
-     **Registration Form**: Users can provide personal information, contact details, medical history,
-    and preferred vaccination center for registration.
-    ## Appointment Management ##: Users can schedule appointments, view appointments by date, and manage
-    appointments (reschedule, cancel, and send reminders).
-    ## Admin Dashboard ##: Admins can monitor registrations, view vaccine stock, manage vaccination centers,
-    and generate general reports.
-    ## Vaccine Information ##: Admins can manage vaccine information, including adding, viewing, editing,
-    and deleting.
-    ## Profile Management ##: Registered users can update their personal information, change appointments,
-    and update medical reports.
+    ## The code is divided futher into the following  components:
+     1.**registrationForm()**: Collects customer's personal, contact, medical, and center preferences.
+    2.**appointmentScheduling()**: Allows customers to schedule vaccination appointments.
+    3.**dashboard()**: Displays appointment summary and profile information for customers.
+    4.**profileManagement()**: Enables customers to update personal and medical information.
+    5.**vaccineInformation()**: Allows administrators to manage vaccine details.
+    6.**manageAppointments()**: Enables administrators to manage appointments.
+    7.**addStock()**: Lets administrators add vaccine stock to the system.
 
 ## Important Functions:
 
