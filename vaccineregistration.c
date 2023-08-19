@@ -35,7 +35,6 @@ struct Appointment {
     char time[10];
     char centerName[50]; // Adding the center name field
 };
-
 struct Vaccine {
     char name[50];
     char manufacturer[50];
@@ -46,6 +45,7 @@ struct VaccineStock {
     char vaccineName[50];
     int quantity;
 };
+//components
 void customerMenu();
 void adminMenu();
 void registrationForm();
@@ -54,6 +54,7 @@ void dashboard();
 void vaccineInformation();
 void manageAppointments();
 void profileManagement();
+//main menue
 int main() {
     int role;
     printf("Welcome to the Vaccine Registration System!\n");
