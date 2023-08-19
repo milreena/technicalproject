@@ -1,348 +1,254 @@
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
-int choice;
-
-struct Profile {
+struct PersonalInfo {
     char name[50];
     char aadhaar[15];
-    char appointment[50];
-    char medicalReport[100];
+    char dateOfBirth[15];
+    char gender[10];
+};
+struct ContactDetails {
+    char email[50];
+    char phone[15];
+    char emergencyContact[50];
+    char emergencyPhone[15];
+    char address[100];
+};
+struct MedicalHistory {
+    char medicalHistory[200];
+    char prescription[200];
+    char allergies[100];
+    char currentMedications[200];
+};
+struct PreferredCenter {
+    char centerName[50];
+    char address[100];
+    char city[50];
+    char state[50];
+    char zipcode[10];
+};
+struct Appointment {
+    char aadhaar[15];
+    char date[15];
+    char time[10];
+    char centerName[50]; // Adding the center name field
 };
 
-struct VaccineInfo {
-    int id;
+struct Vaccine {
     char name[50];
     char manufacturer[50];
+    char type[20];
     int dosesRequired;
 };
-
-struct ReportData {
-    char title[100];
-    char content[1000];
+struct VaccineStock {
+    char vaccineName[50];
+    int quantity;
 };
-
-struct Center {
-    char centerName[100];
-    int availableStock;
-    char location[100];  // Add location field
-    char contactPerson[100];  // Add contact person's name
-    char contactNumber[15];  // Add contact person's number
-    // Add any other center details you need
-};
-
-struct Appointment {
-    char aadhaarNumber[20];
-    char date[20];
-    char time[10];
-    int confirmed;
-    int isCancelled;
-};
-
-struct PersonalInformation {
-    char name[100];
-    char aadhaarNumber[20];
-};
-
-struct ContactDetails {
-    char email[100];
-    char phone[15];
-};
-
-struct MedicalHistory {
-    char conditions[200];
-    char medications[200];
-};
-
-struct PreferredCenter {
-    char centerName[100];
-};
-// Main menu
+void customerMenu();
+void adminMenu();
+void registrationForm();
+void appointmentScheduling();
+void dashboard();
+void vaccineInformation();
+void manageAppointments();
+void profileManagement();
 int main() {
-    struct PersonalInformation personalInfo;
-    struct ContactDetails contactDetails;
-    struct MedicalHistory medicalHistory;
-    struct PreferredCenter preferredCenter;
-    struct VaccineInfo vaccine;
-
-    int choice;
-
-    do {
-        printf("\n1. Register\n");
-        printf("2. Apointment\n");
-        printf("3. admin dashboard\n");
-        printf("4. vaccine info\n");
-        printf("5. manage appointment\n");
-         printf("6. profile management\n");
-          printf("7. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                registrationForm(&personalInfo, &contactDetails, &medicalHistory, &preferredCenter);
-                break;
-            case 2:
-                    
-
-    do {
-        printf("1. Schedule Appointment\n");
-        printf("2. View Appointments\n");
-        printf("3. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-
-        switch (choice) {
-            case 1:
-                scheduleAppointment();
-                break;
-            case 2: {
-                char date[20];
-                printf("Enter date to view appointments (dd-mm-yyyy): ");
-                scanf("%s", date);
-                viewAppointmentsByDate(date);
-                break;
-            }
-            case 3:
-                printf("Exiting the program.\n");
-                exit(0);
-            default:
-                printf("Invalid choice. Please select again.\n");
-        }
-    } while (1);
-            case 3:
-                 adminDashboard();
-                 break;
-            case 4:
-                vaccinemain();
-                break;
-            case 5:
-                    manageappointment();
-                    break;
-
-            case 6:
-                    profileMenu();
-                    break;
-            case 7:
-                printf("Exiting the program.\n");
-                exit(0);
-            default:
-                printf("Invalid choice. Please select again.\n");
-        }
-    } while (1);
-
+    int role;
+    printf("Welcome to the Vaccine Registration System!\n");
+    printf("Please select your role:\n");
+    printf("1. Customer\n");
+    printf("2. Admin\n");
+    printf("Enter your choice: ");
+    scanf("%d", &role);
+    if (role == 1) {
+        customerMenu();
+    } else if (role == 2) {
+        adminMenu();
+    } else {
+        printf("Invalid role selection.\n");
+    }
     return 0;
 }
-
-// registeration
-void registrationForm() {
-
-   struct PersonalInformation  personalInfo;
- struct ContactDetails contactDetails;
- struct MedicalHistory medicalHistory;
- struct PreferredCenter  preferredCenter;
-    printf("Registration Form:\n");
-
-    printf("1. Personal Information\n");
-    printf("Name: ");
-    scanf(" %s", personalInfo.name);
-    printf("Aadhaar Number: ");
-    scanf(" %s", personalInfo.aadhaarNumber);
-   
-
-    printf("\n2. Contact Details\n");
-    printf("Email: ");
-    scanf(" %[^\n]", contactDetails.email);
-    printf("Phone: ");
-    scanf(" %[^\n]", contactDetails.phone);
-
-    printf("\n3. Medical History\n");
-    printf("Existing Medical Conditions: ");
-    scanf(" %[^\n]", medicalHistory.conditions);
-    printf("Current Medications: ");
-    scanf(" %[^\n]", medicalHistory.medications);
-
-    printf("\n4. Preferred Vaccination Center\n");
-    printf("Center Name: ");
-    scanf(" %[^\n]", preferredCenter.centerName);
-    
-    FILE *file = fopen("registrations.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-    
-     fprintf(file, "registered\nname:%s\n,Aadhar:%s\n,email:%s\n,phone:%s\n,condition:%s\n,medication:%s\n",personalInfo.name, personalInfo.aadhaarNumber,contactDetails.email,contactDetails.phone,medicalHistory.conditions,medicalHistory.medications);
-
-    fclose(file);
-
-    printf("\nRegistration Successful!\n");
-}
-
-//Appointment
-void scheduleAppointment() {
-    struct Appointment appointment;
-
-    printf("Enter your Aadhaar number: ");
-    scanf("%s", appointment.aadhaarNumber);
-    
-    printf("Enter date (dd-mm-yyyy): ");
-    scanf("%s", appointment.date);
-
-    printf("Enter time slot (hh:mm): ");
-    scanf("%s", appointment.time);
-
-    appointment.confirmed = 0;
-    FILE *file = fopen("appointments.txt", "a");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    fprintf(file, "aadhar no.:%s\n,date:%s\n,time:%s\n,confirmed:%d\n",
-            appointment.aadhaarNumber, appointment.date,
-            appointment.time, appointment.confirmed);
-
-    fclose(file);
-
-    printf("Appointment scheduled successfully!\n");
-}
-void viewAppointmentsByDate(const char *date) {
-    FILE *file = fopen("appointments.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    printf("Appointments for %s:\n", date);
-
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        char storedDate[20];
-        sscanf(line, "%*[^|]|%[^|]", storedDate);
-        if (strcmp(storedDate, date) == 0) {
-            printf("%s", line);
-        }
-    }
-
-    fclose(file);
-}
-void manageCenters() {
-    int numCenters;
-    printf("Enter the number of centers: ");
-    scanf("%d", &numCenters);
-
-    FILE *file = fopen("centers.txt", "w");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    for (int i = 0; i < numCenters; i++) {
-        struct Center center;
-
-        printf("Enter center details:\n");
-        printf("Center Name: ");
-        scanf("%s", center.centerName);
-
-        printf("Available Stock: ");
-        scanf("%d", &center.availableStock);
-
-        // Collect and store other center details
-        printf("Location: ");
-        scanf("%s", center.location);
-
-        printf("Contact Person: ");
-        scanf("%s", center.contactPerson);
-
-        printf("Contact Number: ");
-        scanf("%s", center.contactNumber);
-
-        // Write center details to the file
-        fprintf(file, "%s %d %s %s %s\n",
-                center.centerName, center.availableStock,
-                center.location, center.contactPerson, center.contactNumber);
-    }
-
-    fclose(file);
-    printf("Centers information updated.\n");
-}
-
-
-//dashboard
-void monitorRegistrations() {
-    FILE *file = fopen("registrations.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    printf("Registered People:\n");
-    //printf("Name\tAadhaar Number\n");
-    
-    struct PersonalInformation personalInfo;
-    while (fscanf(file, "%s %s", personalInfo.name, personalInfo.aadhaarNumber) != EOF) {
-        printf("%s\t%s\n",  personalInfo.name,  personalInfo.aadhaarNumber);
-    }
-
-    fclose(file);
-}
-void viewStock() {
-    FILE *file = fopen("centers.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file!\n");
-        return;
-    }
-
-    printf("Center\tAvailable Stock\n");
-    char centerName[100];
-    int stock;
-    while (fscanf(file, "%s %d", centerName, &stock) != EOF) {
-        printf("%s\t%d\n", centerName, stock);
-    }
-
-    fclose(file);
-}
-void generateGeneralReport(const char *reportTitle, const char *reportContent) {
-    struct ReportData report;
-    strcpy(report.title, reportTitle);
-    strcpy(report.content, reportContent);
-
-    // Generate a unique file name for the report
-    char fileName[100];
-    snprintf(fileName, sizeof(fileName), "report_%ld.txt", time(NULL));
-
-    // Create and write the report to a file
-    FILE *file = fopen(fileName, "w");
-    if (file == NULL) {
-        printf("Error creating report file!\n");
-        return;
-    }
-
-    fprintf(file, "Report Title: %s\n\n", report.title);
-    fprintf(file, "Report Content:\n%s\n", report.content);
-
-    fclose(file);
-
-    printf("Report generated successfully: %s\n", fileName);
-}
-void adminDashboard() {
+void customerMenu() {
     int choice;
-
     do {
-        printf("Admin Dashboard\n");
-        printf("1. Monitor Registrations\n");
-        printf("2. View Stock\n");
-        printf("3. Manage Centers\n");
-        printf("4. Generate General Report\n");
+        printf("\nCustomer Menu\n");
+        printf("1. Registration Form\n");
+        printf("2. Appointment Scheduling\n");
+        printf("3. Dashboard\n");
+        printf("4. Profile Management\n");
         printf("5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-
         switch (choice) {
             case 1:
-                monitorRegistrations();
+                registrationForm();
+                break;
+            case 2:
+                appointmentScheduling();
+                break;
+            case 3:
+                dashboard();
+                break;
+            case 4:
+                profileManagement();
+                break;
+            case 5:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
+}
+void adminMenu() {
+    int choice;
+    do {
+        printf("\nAdmin Menu\n");
+        printf("1. Manage Vaccine Information\n");
+        printf("2. Manage Appointments\n");
+        printf("3. Add Vaccine Stock\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                vaccineInformation();
+                break;
+            case 2:
+                manageAppointments();
+                break;
+            case 3:
+                addStock();
+                break;
+            case 4:
+                printf("Exiting...\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
+}
+// Function to handle registration form
+void registrationForm() {
+    struct PersonalInfo Person;
+    struct ContactDetails Contact;
+    struct MedicalHistory History;
+    struct PreferredCenter Center;
+    printf("\nRegistration Form\n");
+    printf("Enter Name: ");
+    scanf("%s", Person.name);
+    printf("Enter Aadhaar Number: ");
+    scanf("%s", Person.aadhaar);
+    printf("Enter Date of Birth (YYYY-MM-DD): ");
+    scanf("%s", Person.dateOfBirth);
+    printf("Enter Gender: ");
+    scanf("%s", Person.gender);
+    // Collect contact details
+    printf("Enter Email: ");
+    scanf("%s", Contact.email);
+    printf("Enter Phone Number: ");
+    scanf("%s", Contact.phone);
+    printf("Enter Emergency Contact: ");
+    scanf("%s", Contact.emergencyContact);
+    printf("Enter Emergency Phone: ");
+    scanf("%s", Contact.emergencyPhone);
+    printf("Enter Address: ");
+    scanf("%s", Contact.address);
+    // Collect medical history
+    printf("Enter Medical History: ");
+    scanf("%s", History.medicalHistory);
+    printf("Enter Prescription: ");
+    scanf("%s", History.prescription);
+    printf("Enter Allergies: ");
+    scanf("%s", History.allergies);
+    printf("Enter Current Medications: ");
+    scanf("%s", History.currentMedications);
+    // Collect preferred center information
+    printf("Enter Preferred Center Name: ");
+    scanf("%s", Center.centerName);
+    printf("Enter Address of Preferred Center: ");
+    scanf("%s", Center.address);
+    printf("Enter City of Preferred Center: ");
+    scanf("%s", Center.city);
+    printf("Enter State of Preferred Center: ");
+    scanf("%s", Center.state);
+    printf("Enter Zipcode of Preferred Center: ");
+    scanf("%s", Center.zipcode);
+    FILE *file = fopen("registration.txt", "a");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+    // Write the collected data to the file
+    fprintf(file, "\n\n\nName: %s\n", Person.name);
+    fprintf(file, "Aadhaar Number: %s\n", Person.aadhaar);
+    fprintf(file, "Date of Birth: %s\n", Person.dateOfBirth);
+    fprintf(file, "Gender: %s\n", Person.gender);
+    // Write contact details
+    fprintf(file, "Email: %s\n", Contact.email);
+    fprintf(file, "Phone Number: %s\n", Contact.phone);
+    fprintf(file, "Emergency Contact: %s\n", Contact.emergencyContact);
+    fprintf(file, "Emergency Phone: %s\n", Contact.emergencyPhone);
+    fprintf(file, "Address: %s\n", Contact.address);
+    // Write medical history
+    fprintf(file, "Medical History: %s\n", History.medicalHistory);
+    fprintf(file, "Prescription: %s\n", History.prescription);
+    fprintf(file, "Allergies: %s\n", History.allergies);
+    fprintf(file, "Current Medications: %s\n", History.currentMedications);
+    // Write preferred center information
+    fprintf(file, "Preferred Center Name: %s\n", Center.centerName);
+    fprintf(file, "Address of Preferred Center: %s\n", Center.address);
+    fprintf(file, "City of Preferred Center: %s\n", Center.city);
+    fprintf(file, "State of Preferred Center: %s\n", Center.state);
+    fprintf(file, "Zipcode of Preferred Center: %s\n", Center.zipcode);
+    printf("---------------------------\n");
+    fclose(file);
+    printf("Registration completed successfully.\n");
+    
+}
+// Function to schedule an appointment
+void appointmentScheduling() {
+    printf("\nAppointment Scheduling\n");
+    struct Appointment newAppointment;
+    printf("Enter Aadhaar Number: ");
+    scanf("%s", newAppointment.aadhaar);
+    printf("Enter Date (YYYY-MM-DD): ");
+    scanf("%s", newAppointment.date);
+    printf("Enter Time (HH:MM AM/PM): ");
+    scanf("%s", newAppointment.time);
+    printf("Enter Preferred Center Name: ");
+    scanf("%s", newAppointment.centerName);
+    FILE *file = fopen("appointments.txt", "a");
+    if (file == NULL) {
+        printf("Error opening appointments file for writing.\n");
+        return;
+    }
+    // Write the appointment data to the file
+    fprintf(file, "Aadhaar Number: %s\n", newAppointment.aadhaar);
+    fprintf(file, "Date: %s\n", newAppointment.date);
+    fprintf(file, "Time: %s\n", newAppointment.time);
+    fprintf(file, "Center Name: %s\n", newAppointment.centerName);
+    fprintf(file, "--------------------\n");
+    fclose(file);
+    printf("Appointment scheduled successfully.\n");
+}
+void dashboard() {
+    int choice;
+    do {
+        printf("\nDashboard\n");
+        printf("1. Monitor Register\n");
+        printf("2. View Stock\n");
+        printf("3. Manage Centers\n");
+        printf("4. General Report\n");
+        printf("5. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                monitorRegister(); // Call the function for monitor register logic
                 break;
             case 2:
                 viewStock();
@@ -351,453 +257,634 @@ void adminDashboard() {
                 manageCenters();
                 break;
             case 4:
-                generateGeneralReport("Monthly Vaccination Data", "Total vaccinations: 1500\nVaccination centers: 5");
-
+               generalReport();
                 break;
             case 5:
-                printf("Exiting admin dashboard.\n");
-                return;
-            default:
-                printf("Invalid choice. Please select again.\n");
-        }
-    } while (1);
-}
-
-//vaccine info
-void addVaccineInfo(FILE *file) {
-    struct VaccineInfo vaccine;
-    
-    printf("Enter Vaccine ID: ");
-    scanf("%d", &vaccine.id);
-    printf("Enter Vaccine Name: ");
-    scanf("%s", vaccine.name);
-    printf("Enter Manufacturer: ");
-    scanf("%s", vaccine.manufacturer);
-    printf("Enter Doses Required: ");
-    scanf("%d", &vaccine.dosesRequired);
-    
-    fseek(file, 0, SEEK_END);
-    fwrite(&vaccine, sizeof(struct VaccineInfo), 1, file);
-    
-    printf("Vaccine information added successfully.\n");
-}
-void viewVaccineInfo(FILE *file) {
-    struct VaccineInfo vaccine;
-    
-    printf("\nVaccine Information:\n");
-    
-    fseek(file, 0, SEEK_SET);
-    
-    while (fread(&vaccine, sizeof(struct VaccineInfo), 1, file)) {
-        printf("ID: %d\n", vaccine.id);
-        printf("Name: %s\n", vaccine.name);
-        printf("Manufacturer: %s\n", vaccine.manufacturer);
-        printf("Doses Required: %d\n", vaccine.dosesRequired);
-        printf("---------------\n");
-    }
-}
-void editVaccineInfo(FILE *file, int id) {
-    struct VaccineInfo vaccine;
-    
-    fseek(file, 0, SEEK_SET);
-    
-    while (fread(&vaccine, sizeof(struct VaccineInfo), 1, file)) {
-        if (vaccine.id == id) {
-            printf("Enter updated Vaccine Name: ");
-            scanf("%s", vaccine.name);
-            printf("Enter updated Manufacturer: ");
-            scanf("%s", vaccine.manufacturer);
-            printf("Enter updated Doses Required: ");
-            scanf("%d", &vaccine.dosesRequired);
-            
-            fseek(file, -sizeof(struct VaccineInfo), SEEK_CUR);
-            fwrite(&vaccine, sizeof(struct VaccineInfo), 1, file);
-            
-            printf("Vaccine information updated successfully.\n");
-            return;
-        }
-    }
-    
-    printf("Vaccine ID not found.\n");
-}
-void deleteVaccineInfo(FILE *file, int id) {
-    struct VaccineInfo vaccine;
-    FILE *tempFile = fopen("temp.txt", "w");
-    
-    fseek(file, 0, SEEK_SET);
-    
-    while (fread(&vaccine, sizeof(struct VaccineInfo), 1, file)) {
-        if (vaccine.id != id) {
-            fwrite(&vaccine, sizeof(struct VaccineInfo), 1, tempFile);
-        }
-    }
-    
-    fclose(file);
-    fclose(tempFile);
-    
-    remove("vaccine.txt");
-    rename("temp.txt", "vaccine.txt");
-    
-    printf("Vaccine information deleted successfully.\n");
-}
-void vaccineMenu(FILE *file) {
-    int choice, id;
-    
-    do {
-        printf("\nAdmin Menu\n");
-        printf("1. Add Vaccine Information\n");
-        printf("2. View Vaccine Information\n");
-        printf("3. Edit Vaccine Information\n");
-        printf("4. Delete Vaccine Information\n");
-        printf("5. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
-        
-        switch(choice) {
-            case 1:
-                addVaccineInfo(file);
-                break;
-            case 2:
-                viewVaccineInfo(file);
-                break;
-            case 3:
-                printf("Enter Vaccine ID to edit: ");
-                scanf("%d", &id);
-                editVaccineInfo(file, id);
-                break;
-            case 4:
-                printf("Enter Vaccine ID to delete: ");
-                scanf("%d", &id);
-                deleteVaccineInfo(file, id);
-                break;
-            case 5:
-                printf("Exiting vaccine menu...\n");
-                return;
+                return; // Go back to the main menu
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while(1);
+    } while (1);
 }
-void vaccinemain() {
-    FILE *file = fopen("vaccine.txt", "r");
-    
+void monitorRegister() {
+    // Open the registration file for reading
+    FILE *file = fopen("registration.txt", "r");
     if (file == NULL) {
         printf("Error opening file.\n");
-        return 1;
+        return;
     }
-    
-    vaccineMenu(file);
-    
+    char line[200];
+    printf("\nRegistered People:\n");
+    printf("------------------\n");
+    while (fgets(line, sizeof(line), file)) {
+        printf("%s", line);
+    }
     fclose(file);
-    
 }
+void viewStock() {
+    printf("Viewing stock...\n");
 
-//manage appointment
-void viewAppointments(FILE *file) {
-    struct Appointment appointment;
-
-    printf("\nAppointments:\n");
-
-    while (fread(&appointment, sizeof(struct Appointment), 1,file)) {
-        if (!appointment.isCancelled) {
-            printf("Aadhaar: %s\n", appointment.aadhaarNumber);
-            printf("Date: %s\n", appointment.date);
-            printf("Time: %s\n", appointment.time);
-            printf("---------------\n");
-        }
-       
+    FILE *file = fopen("stock.txt", "r");
+    if (file == NULL) {
+        printf("Error opening stock file.\n");
+        return;
     }
+    struct VaccineStock stock;
+    printf("Vaccine Name\tQuantity\n");
+    printf("-------------------------\n");
+    while (fread(&stock, sizeof(struct VaccineStock), 1, file) == 1) {
+        printf("%-15s\t%d\n", stock.vaccineName, stock.quantity);
+    }
+    fclose(file);
 }
-void rescheduleAppointment(FILE *file, const char *aadhaar) {
-    struct Appointment appointment;
-    long pos;
-
-    fseek(file, 0, SEEK_SET);
-
-    while (fread(&appointment, sizeof(struct Appointment), 1, file)) {
-        if (strcmp(appointment.aadhaarNumber, aadhaar) == 0 && !appointment.isCancelled) {
-            pos = ftell(file) - sizeof(struct Appointment);
-            break;
-        }
-    }
-
-    if (pos != -1) {
-        printf("Enter new date (dd-mm-yyyy): ");
-        scanf("%s", appointment.date);
-        printf("Enter new time (HH:MM): ");
-        scanf("%s", appointment.time);
-
-        fseek(file, pos, SEEK_SET);
-        fwrite(&appointment, sizeof(struct Appointment), 1,file);
-
-        printf("Appointment rescheduled successfully.\n");
-    } else {
-        printf("Appointment not found or already cancelled.\n");
-    }
-}
-void cancelAppointment(FILE *file, const char *aadhaar) {
-    struct Appointment appointment;
-    long pos;
-
-    fseek(file, 0, SEEK_SET);
-
-    while (fread(&appointment, sizeof(struct Appointment), 1, file)) {
-        if (strcmp(appointment.aadhaarNumber, aadhaar) == 0 && !appointment.isCancelled) {
-            pos = ftell(file) - sizeof(struct Appointment);
-            break;
-        }
-    }
-
-    if (pos != -1) {
-        appointment.isCancelled = 1;
-
-        fseek(file, pos, SEEK_SET);
-        fwrite(&appointment, sizeof(struct Appointment), 1, file);
-
-        printf("Appointment cancelled successfully.\n");
-    } else {
-        printf("Appointment not found or already cancelled.\n");
-    }
-}
-void sendReminder(FILE *file) {
-    struct Appointment appointment;
-    time_t currentTime;
-    struct tm *currentTimeInfo;
-    time(&currentTime);
-    currentTimeInfo = localtime(&currentTime);
-
-    printf("\nUpcoming Appointments:\n");
-
-    while (fread(&appointment, sizeof(struct Appointment), 1, file)) {
-        if (!appointment.isCancelled) {
-            struct tm appointmentTimeInfo = {0};
-            if (sscanf(appointment.time, "%d:%d", &appointmentTimeInfo.tm_hour, &appointmentTimeInfo.tm_min) == 2) {
-                // Set today's date
-                appointmentTimeInfo.tm_year = currentTimeInfo->tm_year;
-                appointmentTimeInfo.tm_mon = currentTimeInfo->tm_mon;
-                appointmentTimeInfo.tm_mday = currentTimeInfo->tm_mday;
-
-                time_t appointmentTime = mktime(&appointmentTimeInfo);
-
-                double difference = difftime(appointmentTime, currentTime);
-                if (difference > 0 && difference <= 24 * 60 * 60) {
-                    printf("Aadhaar: %s\n", appointment.aadhaarNumber);
-                    printf("Date: %s\n", appointment.date);
-                    printf("Time: %s\n", appointment.time);
-                    printf("Reminder: Your appointment is scheduled within 24 hours.\n");
-                    printf("---------------\n");
-                }
-            }
-        }
-    }
-}
-void manageMenu(FILE *file) {
+//manage centers
+void manageCenters() {
     int choice;
-    char aadhaar[15];
-
     do {
-        printf("\nManage Appointments\n");
+        printf("\nManage Centers\n");
+        printf("1. Add Center\n");
+        printf("2. Edit Center\n");
+        printf("3. Delete Center\n");
+        printf("4. View Centers\n");
+        printf("5. Back to Dashboard\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                addCenter();
+                break;
+            case 2:
+                editCenter();
+                break;
+            case 3:
+                deleteCenter();
+                break;
+            case 4:
+                viewCenters();
+                break;
+            case 5:
+                return; // Go back to the dashboard
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
+}
+// Function to add a new center
+void addCenter() {
+    struct PreferredCenter newCenter;
+    printf("\nAdding a new center\n");
+    printf("Enter Center Name: ");
+    scanf("%s", newCenter.centerName);
+    printf("Enter Address: ");
+    scanf("%s", newCenter.address);
+    printf("Enter City: ");
+    scanf("%s", newCenter.city);
+    printf("Enter State: ");
+    scanf("%s", newCenter.state);
+    printf("Enter Zipcode: ");
+    scanf("%s", newCenter.zipcode);
+    FILE *file = fopen("centers.txt", "a");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+    // Write the center data to the file
+    fprintf(file, "Center Name: %s\n", newCenter.centerName);
+    fprintf(file, "Address: %s\n", newCenter.address);
+    fprintf(file, "City: %s\n", newCenter.city);
+    fprintf(file, "State: %s\n", newCenter.state);
+    fprintf(file, "Zipcode: %s\n", newCenter.zipcode);
+    fprintf(file, "--------------------\n");
+    fclose(file);
+    printf("New center added successfully.\n");
+}
+// Function to edit a center's information
+void editCenter() {
+    printf("\nEditing a center\n");
+    int selectedCenterIndex; // Assume the user selected a center by index
+    FILE *file = fopen("centers.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
+    fseek(file, selectedCenterIndex * sizeof(struct PreferredCenter), SEEK_SET);
+    struct PreferredCenter editedCenter;
+    fread(&editedCenter, sizeof(struct PreferredCenter), 1, file);
+    printf("Enter new Center Name: ");
+    scanf("%s", editedCenter.centerName);
+    printf("Enter new Address: ");
+    scanf("%s", editedCenter.address);
+    printf("Enter new City: ");
+    scanf("%s", editedCenter.city);
+    printf("Enter new State: ");
+    scanf("%s", editedCenter.state);
+    printf("Enter new Zipcode: ");
+    scanf("%s", editedCenter.zipcode);
+    fseek(file, selectedCenterIndex * sizeof(struct PreferredCenter), SEEK_SET);
+    fwrite(&editedCenter, sizeof(struct PreferredCenter), 1, file);
+    fclose(file);
+    printf("Center information edited successfully.\n");
+}
+// Function to delete a center's information
+void deleteCenter() {
+    printf("\nDeleting a center\n");
+    int selectedCenterIndex; // Assume the user selected a center by index
+    FILE *file = fopen("centers.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening centers file.\n");
+        return;
+    }
+    long int offset = selectedCenterIndex * sizeof(struct PreferredCenter);
+    fseek(file, 0, SEEK_END);
+    long int fileSize = ftell(file);
+    for (long int i = offset + sizeof(struct PreferredCenter); i < fileSize; i++) {
+        fseek(file, i, SEEK_SET);
+        char c = fgetc(file);
+        fseek(file, i - sizeof(struct PreferredCenter), SEEK_SET);
+        fputc(c, file);
+    }
+    ftruncate(fileno(file), fileSize - sizeof(struct PreferredCenter));
+    fclose(file);
+    printf("Center information deleted successfully.\n");
+}
+// Function to view all registered centers
+void viewCenters() {
+    printf("\nViewing all centers\n");
+    FILE *file = fopen("centers.txt", "r");
+    if (file == NULL) {
+        printf("Error opening centers file.\n");
+        return;
+    }
+    struct PreferredCenter center;
+    char line[200];
+    printf("List of registered centers:\n");
+    printf("============================\n");
+     while (fgets(line, sizeof(line), file)) {
+        printf("%s", line);
+    }
+    while (fread(&center, sizeof(struct PreferredCenter), 1, file) == 1) {
+        printf("Center Name: %s\n", center.centerName);
+        printf("Address: %s\n", center.address);
+        printf("City: %s\n", center.city);
+        printf("State: %s\n", center.state);
+        printf("Zipcode: %s\n", center.zipcode);
+        printf("---------------------------\n");
+    }
+    fclose(file);
+}
+// Function to generate and display a general report
+void generalReport() {
+    FILE *file = fopen("registration.txt", "r");
+    if (file == NULL) {
+        printf("Error opening registration file.\n");
+        return;
+    }
+    printf("\nGeneral Report\n");
+    printf("===================================\n");
+    struct PersonalInfo person;
+    struct ContactDetails contact;
+    struct MedicalHistory history;
+    struct PreferredCenter center;
+    while (fread(&person, sizeof(struct PersonalInfo), 1, file) == 1) {
+        fread(&contact, sizeof(struct ContactDetails), 1, file);
+        fread(&history, sizeof(struct MedicalHistory), 1, file);
+        fread(&center, sizeof(struct PreferredCenter), 1, file);
+        printf("\nName: %s\n", person.name);
+        printf("Aadhaar: %s\n", person.aadhaar);
+        printf("Date of Birth: %s\n", person.dateOfBirth);
+        printf("Gender: %s\n", person.gender);
+        printf("Email: %s\n", contact.email);
+        printf("Phone: %s\n", contact.phone);
+        printf("Emergency Contact: %s\n", contact.emergencyContact);
+        printf("Emergency Phone: %s\n", contact.emergencyPhone);
+        printf("Address: %s\n", contact.address);
+        printf("Medical History: %s\n", history.medicalHistory);
+        printf("Prescription: %s\n", history.prescription);
+        printf("Allergies: %s\n", history.allergies);
+        printf("Current Medications: %s\n", history.currentMedications);
+        printf("Preferred Center: %s\n", center.centerName);
+        printf("Address: %s\n", center.address);
+        printf("City of Preferred Center: %s\n", center.city);
+        printf("State of Preferred Center: %s\n", center.state);
+        printf("Zipcode of Preferred Center: %s\n", center.zipcode);
+        printf("===================================\n");
+    }
+    fclose(file);
+}
+// Function to manage vaccine information
+void vaccineInformation() {
+    int choice;
+    do {
+        printf("\nVaccine Information Management\n");
+        printf("1. Add Vaccine Information\n");
+        printf("2. Edit Vaccine Information\n");
+        printf("3. Delete Vaccine Information\n");
+        printf("4. View Vaccine Information\n");
+        printf("5. Back to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                addVaccineInformation();
+                break;
+            case 2:
+                editVaccineInformation();
+                break;
+            case 3:
+                deleteVaccineInformation();
+                break;
+            case 4:
+                viewVaccineInformation();
+                break;
+            case 5:
+                return; // Go back to the main menu
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    } while (1);
+}
+// Function to add new vaccine information
+void addVaccineInformation() {
+    struct Vaccine newVaccine;
+    printf("\nAdding new vaccine information\n");
+    printf("Enter Vaccine Name: ");
+    scanf("%s", newVaccine.name);
+    printf("Enter Manufacturer: ");
+    scanf("%s", newVaccine.manufacturer);
+    printf("Enter Type: ");
+    scanf("%s", newVaccine.type);
+    printf("Enter Number of Doses Required: ");
+    scanf("%d", &newVaccine.dosesRequired);
+    FILE *file = fopen("vaccine_info.txt", "a");
+    if (file == NULL) {
+        printf("Error opening file for writing.\n");
+        return;
+    }
+    // Write the vaccine data to the file
+    fprintf(file, "Vaccine Name: %s\n", newVaccine.name);
+    fprintf(file, "Manufacturer: %s\n", newVaccine.manufacturer);
+    fprintf(file, "Type: %s\n", newVaccine.type);
+    fprintf(file, "Doses Required: %d\n", newVaccine.dosesRequired);
+    fprintf(file, "--------------------\n");
+    fclose(file);
+    printf("New vaccine information added successfully.\n");
+}
+// Function to edit vaccine information
+void editVaccineInformation() {
+    printf("\nEditing vaccine information\n");
+    int selectedVaccineIndex; // Assume the user selected a vaccine by index
+    FILE *file = fopen("vaccine_info.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening file for reading and writing.\n");
+        return;
+    }
+    long int offset = selectedVaccineIndex * sizeof(struct Vaccine);
+    fseek(file, offset, SEEK_SET);
+    // Read the vaccine's information
+    struct Vaccine editedVaccine;
+    fread(&editedVaccine, sizeof(struct Vaccine), 1, file);
+    printf("Enter new Vaccine Name: ");
+    scanf("%s", editedVaccine.name);
+    printf("Enter new Manufacturer: ");
+    scanf("%s", editedVaccine.manufacturer);
+    printf("Enter new Type: ");
+    scanf("%s", editedVaccine.type);
+    printf("Enter new Number of Doses Required: ");
+    scanf("%d", &editedVaccine.dosesRequired);
+    fseek(file, offset, SEEK_SET);
+    fwrite(&editedVaccine, sizeof(struct Vaccine), 1, file);
+    fclose(file);
+    printf("Vaccine information edited successfully.\n");
+}
+void deleteVaccineInformation() {
+    printf("\nDeleting vaccine information\n");
+    int selectedVaccineIndex; // Assume the user selected a vaccine by index
+    FILE *originalFile = fopen("vaccine_info.txt", "r");
+    if (originalFile == NULL) {
+        printf("Error opening file for reading.\n");
+        return;
+    }
+    FILE *tempFile = fopen("temp_vaccine_info.txt", "w");
+    if (tempFile == NULL) {
+        printf("Error opening temporary file for writing.\n");
+        fclose(originalFile);
+        return;
+    }
+    struct Vaccine vaccine;
+    int currentIndex = 0;
+while (fread(&vaccine, sizeof(struct Vaccine), 1, originalFile) == 1) {
+    if (currentIndex != selectedVaccineIndex) {
+        fwrite(&vaccine, sizeof(struct Vaccine), 1, tempFile);
+    }
+    currentIndex++; // Increment the counter for each record
+}
+    fclose(originalFile);
+    fclose(tempFile);
+    remove("vaccine_info.txt");
+    rename("temp_vaccine_info.txt", "vaccine_info.txt");
+    printf("Vaccine information deleted successfully.\n");
+}
+
+// Function to view all registered vaccine information
+void viewVaccineInformation() {
+    printf("\nViewing all vaccine information\n");
+    FILE *file = fopen("vaccine_info.txt", "r");
+    if (file == NULL) {
+        printf("Error opening vaccine information file.\n");
+        return;
+    }
+    struct Vaccine vaccine;
+    char line[200];
+    printf("List of registered vaccines:\n");
+    printf("============================\n");
+     while (fgets(line, sizeof(line), file)) {
+        printf("%s", line);
+    }
+    while (fread(&vaccine, sizeof(struct Vaccine), 1, file) == 1) {
+        printf("Vaccine Name: %s\n", vaccine.name);
+        printf("Manufacturer: %s\n", vaccine.manufacturer);
+        printf("Type: %s\n", vaccine.type);
+        printf("Doses Required: %d\n", vaccine.dosesRequired);
+        printf("---------------------------\n");
+    }
+    fclose(file);
+}
+// Function to manage appointments
+void manageAppointments() {
+    int choice;
+    do {
+        printf("\nAppointment Management\n");
         printf("1. View Appointments\n");
         printf("2. Reschedule Appointment\n");
         printf("3. Cancel Appointment\n");
-        printf("4. Send Reminders\n");
-        printf("5. Exit\n");
+        printf("4. Send Reminder\n");
+        printf("5. Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-
         switch (choice) {
             case 1:
-                viewAppointments(file);
+                viewAppointments();
                 break;
             case 2:
-                printf("Enter Aadhaar number: ");
-                scanf("%s", aadhaar);
-                rescheduleAppointment(file, aadhaar);
+                rescheduleAppointment();
                 break;
             case 3:
-                printf("Enter Aadhaar number: ");
-                scanf("%s", aadhaar);
-                cancelAppointment(file, aadhaar);
+                cancelAppointment();
                 break;
             case 4:
-                sendmain();
+                sendReminder();
                 break;
             case 5:
-                printf("Exiting...\n");
-                exit(0);
+                return; // Go back to the main menu
             default:
                 printf("Invalid choice. Please try again.\n");
         }
     } while (1);
 }
- void manageappointment() {
-     struct Appointment appointment;
+// Function to view appointments
+void viewAppointments() {
+    printf("\nViewing appointments\n");
     FILE *file = fopen("appointments.txt", "r");
-
     if (file == NULL) {
         printf("Error opening appointments file.\n");
-        return 1;
+        return;
     }
-
-        manageMenu(file);
-     while(fscanf(file, "aadhar no.:%s\n,date:%s\n,time:%s\n,confirmed:%d\n",
-            appointment.aadhaarNumber, appointment.date,
-            appointment.time, appointment.confirmed) != EOF){
-                printf(file, "aadhar no.:%s\n,date:%s\n,time:%s\n,confirmed:%d\n",
-            appointment.aadhaarNumber, appointment.date,
-            appointment.time, appointment.confirmed);
-         }
-
+    struct Appointment appointment;
+    printf("List of scheduled appointments:\n");
+    printf("==============================\n");
+    while (fread(&appointment, sizeof(struct Appointment), 1, file) == 1) {
+        printf("Aadhaar Number: %s\n", appointment.aadhaar);
+        printf("Date: %s\n", appointment.date);
+        printf("Time: %s\n", appointment.time);
+        printf("Center Name: %s\n", appointment.centerName);
+        printf("---------------------------\n");
+    }
     fclose(file);
-    
 }
-void sendmain() {
-    FILE *file = fopen("appointments.txt", "r");
-
+// Function to reschedule an appointment
+void rescheduleAppointment() {
+    printf("\nRescheduling an appointment\n");
+    int selectedAppointmentIndex; 
+    FILE *file = fopen("appointments.txt", "r+");
     if (file == NULL) {
         printf("Error opening appointments file.\n");
-        return 1;
-    }
-
-    sendReminder(file);
-
-    fclose(file);
-    
-}
-
-//profile mangement
-void updateProfile(struct PersonalInfo *personalInfo) {
-    printf("\nUpdating Profile Information\n");
-    printf("Enter new name: ");
-    scanf("%s", personalInfo->name);
-    printf("Enter new Aadhaar number: ");
-    scanf("%s", personalInfo->aadhaar);
-    FILE *file = fopen("registrations.txt", "r");
-    if (file == NULL) {
-        printf("Error opening file.\n");
         return;
     }
-    
-    struct PersonalInfo personalInfo;
-    long pos = -1;
-    
-    while (fread(&personalInfo, sizeof(struct PersonalInfo), 1, file)) {
-        if (strcmp(personalInfo.aadhaar, personalInfo->aadhaar) == 0) {
-            pos = ftell(file) - sizeof(struct PersonalInfo);
-            break;
-        }
-    }
-    
-    if (pos != -1) {
-        fseek(file, pos, SEEK_SET);
-        fwrite(personalInfo, sizeof(struct PersonalInfo), 1, file);
-        printf("Profile information updated successfully.\n");
-    } else {
-        printf("Profile not found.\n");
-    }
-    
+    long int offset = selectedAppointmentIndex * sizeof(struct Appointment);
+    fseek(file, offset, SEEK_SET);
+    struct Appointment rescheduledAppointment;
+    fread(&rescheduledAppointment, sizeof(struct Appointment), 1, file);
+    printf("Enter new Date: ");
+    scanf("%s", rescheduledAppointment.date);
+    printf("Enter new Time: ");
+    scanf("%s", rescheduledAppointment.time);
+    fseek(file, offset, SEEK_SET);
+    fwrite(&rescheduledAppointment, sizeof(struct Appointment), 1, file);
     fclose(file);
+    printf("Appointment rescheduled successfully.\n");
 }
-
-void changeAppointment(struct Appointment *appointment) {
-    printf("\nChanging Appointment\n");
-    printf("Enter new date: ");
-    scanf("%s", appointment->date);
-    printf("Enter new time: ");
-    scanf("%s", appointment->time);
-    
+// Function to cancel an appointment
+void cancelAppointment() {
+    printf("\nCanceling an appointment\n");
+    int selectedAppointmentIndex; // Assume the user selected an appointment by index
+    FILE *originalFile = fopen("appointments.txt", "r");
+    if (originalFile == NULL) {
+        printf("Error opening appointments file.\n");
+        return;
+    }
+    FILE *tempFile = fopen("temp_appointments.txt", "w");
+    if (tempFile == NULL) {
+        printf("Error opening temporary file for writing.\n");
+        fclose(originalFile);
+        return;
+    }
+    struct Appointment appointment;
+    int currentIndex = 0;
+    while (fread(&appointment, sizeof(struct Appointment), 1, originalFile) == 1) {
+        if (currentIndex != selectedAppointmentIndex) {
+            fwrite(&appointment, sizeof(struct Appointment), 1, tempFile);
+        }
+        currentIndex++;
+    }
+    fclose(originalFile);
+    fclose(tempFile);
+    remove("appointments.txt");
+    rename("temp_appointments.txt", "appointments.txt");
+    printf("Appointment canceled successfully.\n");
+}
+// Function to send a reminder for an appointment
+void sendReminder() {
+    printf("\nSending a reminder\n");
+    int selectedAppointmentIndex; // Assume the user selected an appointment by index
     FILE *file = fopen("appointments.txt", "r");
     if (file == NULL) {
-        printf("Error opening file.\n");
+        printf("Error opening appointments file.\n");
         return;
     }
-    
     struct Appointment appointment;
-    long pos = -1;
-    
-    while (fread(&appointment, sizeof(struct Appointment), 1, file)) {
-        if (strcmp(appointment.aadhaarNumber, appointment->aadhaarNumber) == 0) {
-            pos = ftell(file) - sizeof(struct Appointment);
+    int currentIndex = 0;
+    // Find the selected appointment
+    while (fread(&appointment, sizeof(struct Appointment), 1, file) == 1) {
+        if (currentIndex == selectedAppointmentIndex) {
+            printf("Sending a reminder for the following appointment:\n");
+            printf("Aadhaar Number: %s\n", appointment.aadhaar);
+            printf("Date: %s\n", appointment.date);
+            printf("Time: %s\n", appointment.time);
+            printf("Center Name: %s\n", appointment.centerName);
+            printf("---------------------------\n");
+            printf("Reminder sent.\n");
             break;
         }
+        currentIndex++;
     }
-    
-    if (pos != -1) {
-        fseek(file, pos, SEEK_SET);
-        fwrite(appointment, sizeof(struct Appointment), 1, file);
-        printf("Appointment details changed successfully.\n");
-    } else {
-        printf("Appointment not found.\n");
-    }
-    
     fclose(file);
 }
-void updateMedicalReport(struct MedicalHistory *medicalhistory) {
-    printf("\nUpdating Medical Report\n");
-    printf("Enter new medical history: ");
-    scanf("%s", medicalhistory->medicalHistory);
-    printf("Enter new prescription: ");
-    scanf("%s", medicalhistory->prescription);
-    
-    // Assuming 'file' is a global file pointer for the medical history database file
-    FILE *file = fopen("medical_history.dat", "r+");
-    if (file == NULL) {
-        printf("Error opening file.\n");
-        return;
-    }
-    
-    struct MedicalHistory medicalhistory;
-    long pos = -1;
-    
-    while (fread(&medicalhistory, sizeof(struct MedicalHistory), 1, file)) {
-        if (strcmp(medicalhistory.aadhaar, medicalhistory->aadhaar) == 0) {
-            pos = ftell(file) - sizeof(struct MedicalHistory);
-            break;
-        }
-    }
-    
-    if (pos != -1) {
-        fseek(file, pos, SEEK_SET);
-        fwrite(medicalhistory, sizeof(struct MedicalHistory), 1, file);
-        printf("Medical report updated successfully.\n");
-    } else {
-        printf("Medical report not found.\n");
-    }
-    
-    fclose(file);
-}
-
-void profileMenu() {
-    struct PersonalInfo personalInfo;
-    struct Appointment appointment;
-    struct MedicalHistory medicalhistory;
-    
+// Function to manage user profiles
+void profileManagement() {
     int choice;
-    
     do {
-        printf("\nMain Menu\n");
-        printf("1. Update Profile Information\n");
+        printf("\nProfile Management\n");
+        printf("1. Update Information\n");
         printf("2. Change Appointment\n");
         printf("3. Update Medical Report\n");
-        printf("4. Exit\n");
+        printf("4. Back to Main Menu\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
-        
-        switch(choice) {
+        switch (choice) {
             case 1:
-                updateProfile(&personalInfo);
+                updateInformation();
                 break;
             case 2:
-                changeAppointment(&appointment);
+                changeAppointment();
                 break;
             case 3:
-                updateMedicalReport(&medicalhistory);
+                updateMedicalReport();
                 break;
             case 4:
-                printf("Exiting...\n");
-                exit(0);
+                return; // Go back to the main menu
             default:
                 printf("Invalid choice. Please try again.\n");
         }
-    } while(1);
+    } while (1);
+}
+void updateInformation() {
+    printf("\nUpdating information\n");
+    char aadhaarToUpdate[15];
+    printf("Enter Aadhaar number of the profile to update: ");
+    scanf("%s", aadhaarToUpdate);
+    FILE *file = fopen("registration.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening registration file.\n");
+        return;
+    }
+    struct PersonalInfo person;
+    struct ContactDetails contact;
+    while (fread(&person, sizeof(struct PersonalInfo), 1, file) == 1) {
+        if (strcmp(person.aadhaar, aadhaarToUpdate) == 0) {
+            // Update personal information
+            printf("Enter new Name: ");
+            scanf("%s", person.name);
+            printf("Enter new Date of Birth: ");
+            scanf("%s", person.dateOfBirth);
+            printf("Enter new Gender: ");
+            scanf("%s", person.gender);
+            // Update contact information
+            printf("Enter new Email: ");
+            scanf("%s", contact.email);
+            printf("Enter new Phone: ");
+            scanf("%s", contact.phone);
+            printf("Enter new Emergency Contact: ");
+            scanf("%s", contact.emergencyContact);
+            printf("Enter new Emergency Phone: ");
+            scanf("%s", contact.emergencyPhone);
+            printf("Enter new Address: ");
+            scanf("%s", contact.address);
+            fseek(file, -sizeof(struct PersonalInfo), SEEK_CUR);
+            fwrite(&person, sizeof(struct PersonalInfo), 1, file);
+            printf("Information updated successfully.\n");
+            break;
+        }
+    }
+    fclose(file);
+}
+// Function to change an appointment
+void changeAppointment() {
+    printf("\nChanging appointment\n");
+    printf("List of available appointments:\n");
+    int totalAppointments = 0; // Assume the number of available appointments
+    printf("Enter the index of the appointment you want to change (0-%d): ", totalAppointments - 1);
+    int selectedAppointmentIndex; // Assume the user selected an appointment by index
+    scanf("%d", &selectedAppointmentIndex);
+    FILE *file = fopen("appointments.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening appointments file.\n");
+        return;
+    }
+    struct Appointment appointment;
+    while (fread(&appointment, sizeof(struct Appointment), 1, file) == 1) {
+        if (selectedAppointmentIndex == 0) {
+            // Update appointment information
+            printf("Enter new Date: ");
+            scanf("%s", appointment.date);
+            printf("Enter new Time: ");
+            scanf("%s", appointment.time);
+            printf("Enter new Center Name: ");
+            scanf("%s", appointment.centerName);
+            fseek(file, -sizeof(struct Appointment), SEEK_CUR);
+            fwrite(&appointment, sizeof(struct Appointment), 1, file);
+            printf("Appointment changed successfully.\n");
+            break;
+        }
+        selectedAppointmentIndex--;
+    }
+    fclose(file);
+}
+// Function to update medical report
+void updateMedicalReport() {
+    printf("\nUpdating medical report\n");
+    char aadhaarToUpdate[15]; // Assume the user entered an Aadhaar number to update
+    printf("Enter Aadhaar number of the profile to update: ");
+    scanf("%s", aadhaarToUpdate);
+    FILE *file = fopen("registration.txt", "r+");
+    if (file == NULL) {
+        printf("Error opening registration file.\n");
+        return;
+    }
+    struct PersonalInfo person;
+    struct MedicalHistory history;
+    while (fread(&person, sizeof(struct PersonalInfo), 1, file) == 1) {
+        if (strcmp(person.aadhaar, aadhaarToUpdate) == 0) {
+            // Update medical report information
+            printf("Enter updated Medical History: ");
+            scanf(" %[^\n]", history.medicalHistory);
+            printf("Enter updated Prescription: ");
+            scanf(" %[^\n]", history.prescription);
+            printf("Enter updated Allergies: ");
+            scanf(" %[^\n]", history.allergies);
+            printf("Enter updated Current Medications: ");
+            scanf(" %[^\n]", history.currentMedications);
+            fseek(file, -sizeof(struct PersonalInfo), SEEK_CUR);
+            fwrite(&person, sizeof(struct PersonalInfo), 1, file);
+            printf("Medical report updated successfully.\n");
+            break;
+        }
+    }
+    fclose(file);
+}
+void addStock() {
+    printf("Adding new stock...\n");
+
+    FILE *file = fopen("stock.txt", "a");
+    if (file == NULL) {
+        printf("Error opening stock file.\n");
+        return;
+    }
+    struct VaccineStock stock;
+    printf("Enter vaccine name: ");
+    scanf("%s", stock.vaccineName);
+    printf("Enter quantity: ");
+    scanf("%d", &stock.quantity);
+    fwrite(&stock, sizeof(struct VaccineStock), 1, file);
+    fclose(file);
+    printf("Stock added successfully.\n");
 }
