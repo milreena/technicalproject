@@ -106,9 +106,8 @@ void adminMenu() {
         printf("\nAdmin Menu\n");
         printf("1. Manage Vaccine Information\n");
         printf("2. Manage Appointments\n");
-        printf("3. Manage centers\n");
-        printf("4. Add Vaccine Stock\n");
-        printf("5. Exit\n");
+        printf("3. Add Vaccine Stock\n");
+        printf("4. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         switch (choice) {
