@@ -1,13 +1,4 @@
   # # Technical Training Project: Vaccine Registration System
-## CSE3 Batch-36
-
- ## Members-
-    21CS131-Samruddhi.H.R
-    21CS140-Sharadhi Shedigumme
-    21CS145-Sanyuktha Satish Shetty
-    21CS157-Sinchana Shetty
-    21CS169-Swati Metri
-    20CS098-Miliyana Reena Dsouza
 
 ## Problem Statement:
         The Vaccine Registration System is designed to streamline the process of vaccine registration,
