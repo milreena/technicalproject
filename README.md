@@ -10,7 +10,7 @@
 ## Functionality:
         The following functionalities are implemented in the Vaccine Registration System:
 
-    ### 1.Customer Menu:
+     1.Customer Menu:
     
     Registration Form: Allows customers to provide personal information, contact details,
     medical history, and a preferred vaccination center.
@@ -18,7 +18,7 @@
     Dashboard: Provides customers with a summary of their appointments and profile information.
     Profile Management: Allows customers to update their personal details and medical history.
     
-    ### 2.Admin Menu:
+     2.Admin Menu:
     
     Manage Vaccine Information: Enables administrators to add, edit, and delete vaccine information.
     Manage Appointments: Allows administrators to view, reschedule, and cancel appointments.
@@ -26,8 +26,8 @@
 
 
 ## Code Components:
-     ## The code consists of several main components:
-     ## Division of Components ##
+      The code consists of several main components:
+      Division of Components 
     1.Main Function: 
     The entry point of the program that prompts users to select their role
     (customer or admin) and directs them to the corresponding menu.
@@ -37,7 +37,7 @@
     3.Admin Menu: 
     Offers options for administrators to manage vaccine information, appointments, and vaccine stock.
     
-    ## The code is divided futher into the following  components:
+     The code is divided futher into the following  components:
      1.registrationForm(): Collects customer's personal, contact, medical, and center preferences.
     2.appointmentScheduling(): Allows customers to schedule vaccination appointments.
     3.dashboard(): Displays appointment summary and profile information for customers.
