@@ -1,4 +1,4 @@
-  # # Technical Training Project: Vaccine Registration System
+ Technical Training Project: Vaccine Registration System
 
 ## Problem Statement:
         The Vaccine Registration System is designed to streamline the process of vaccine registration,
